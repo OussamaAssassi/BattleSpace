@@ -1,0 +1,78 @@
+<html>
+    <head>
+        <title>BattleSpace</title>
+        <style>
+            #bg_1
+            {
+                position: absolute;
+                top:-100%;
+                left:0;
+                
+                width: 100%;
+                height: 100%;
+                background: url('img/bg.jpg') no-repeat;
+                background-size: cover;
+            }
+            #bg_2
+            {   position: absolute;
+                top:0;
+                left:0;
+                
+                width: 100%;
+                height: 100%;
+                background: url('img/bg.jpg') no-repeat;
+                background-size: cover;
+            }
+            body
+            {
+                overflow: hidden;
+            }
+            .shoot
+            {
+                width: 5px;  
+                height: 20px;
+                background: rgb(253, 146, 21);
+                position: absolute;
+                border-radius: 3px;
+            }
+            #spaceShip
+            {
+                bottom: 0;
+                left: 40%;
+            }    
+            .asteroid
+            {
+                width: 106px;
+                height: 106px;
+                position: absolute;
+                background: url('img/asteroid.png') no-repeat;
+            }
+            .enemy
+            {
+                width: 64px;
+                height: 64px;
+                position: absolute;
+                background: url('img/enemy.gif') no-repeat;
+            }
+            li
+            {
+                list-style: none;
+            }
+            
+        </style>
+    </head>
+    <body id="body">
+        <div class="container">
+            <div id="bg_1"></div>
+            <div id="bg_2"></div>
+
+            <img style="position:absolute;" id="spaceShip" src="img/ship.gif" alt="">
+
+            <ul id="shootzone"></ul>
+            <ul id="asteroidzone"></ul>
+            <ul id="enemyzone"></ul>
+        </div>
+        
+        <script src="js/main.js"></script>
+    </body>
+</html>
