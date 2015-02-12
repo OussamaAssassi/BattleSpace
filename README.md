@@ -1,6 +1,6 @@
 # BattleSpace
 
 BattleSpace is a classic Replica of 2D Space Shooting game.
-Protect your plane from unknown objects, shoot them and clean up the space.
+Protect your plane from unknown objects, shoot them and clean up space.
 
 [DEMO](http://oussama-assassi.com/BattleSpace/)
