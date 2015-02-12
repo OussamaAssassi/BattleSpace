@@ -16,19 +16,24 @@ var spaceShip = document.getElementById("spaceShip"),
     e = 1,
     c = 1,
     d = 1,
+    x = 1,
     shoots = [],
+    enemiesShoots = [],
     asteroids = [],
     enemies = [],
     fireZone = document.getElementById("shootzone"),
     asteroidZone = document.getElementById("asteroidzone"),
     enemyZone = document.getElementById("enemyzone"),
+    enemyShootZone = document.getElementById("enemies_shoot_zone"),
     shootItem,
     asteroidItem,
     enemyItem,
+    enemyShootItem,
     asteroidBox,
     spaceShipBox,
     shootBox,
     shootActivation = false,
+    enemiesShootActivation = false,
     li = null,
     en = null,
     astPosition = 0,
@@ -135,6 +140,17 @@ function spaceShipShoot() {
     }
 }
 
+function enemyShoot() {
+    for( var t = 0; t < enemiesShoots.length;t++ ) {
+        enemyShootItem = document.getElementById(enemiesShoots[t]);
+        enemyShootItem.style.top =  enemyShootItem.offsetTop + 3 + "px";
+        if ( enemyShootItem.offsetTop > windowHeight) {
+            enemyShootZone.removeChild(enemyShootItem);
+            enemiesShoots.splice(t, 1);
+        }
+    }
+}
+
 function asteroidGeneration() {
     li = document.createElement("li");
     astPosition = Math.floor((Math.random() * windowWith) + 1);
@@ -205,6 +221,8 @@ function mainLoop() {
     spaceShipShoot();
     bgAnimation();
     asteroidMove();
+    enemyShoot();
+
 }
 
 setInterval(function() {
@@ -215,6 +233,21 @@ setInterval(function() {
 setInterval(function() {
     enemyGeneration();
 }, 3000);
+
+
+setInterval(function() {
+    for(var w = 0; w < enemies.length; w++) {
+        enemyItem = document.getElementById(enemies[w]);
+        li = document.createElement("li");
+        li.setAttribute("class", "enemy_shoot");
+        li.setAttribute("id", "enemiesShoot_" + x);
+        li.style.top = enemyItem.offsetTop + 66;
+        li.style.left = enemyItem.offsetLeft + 32;
+        enemyShootZone.appendChild(li);
+        enemiesShoots.push("enemiesShoot_" + x);
+        x++;
+    }
+}, 1000);
 
 keyDownHandle();
 keyupHandle();
