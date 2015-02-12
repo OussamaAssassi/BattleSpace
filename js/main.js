@@ -140,7 +140,7 @@ function spaceShipShoot() {
     }
 }
 
-function enemyShoot() {
+function enemyShootMove() {
     for( var t = 0; t < enemiesShoots.length;t++ ) {
         enemyShootItem = document.getElementById(enemiesShoots[t]);
         enemyShootItem.style.top =  enemyShootItem.offsetTop + 3 + "px";
@@ -148,6 +148,20 @@ function enemyShoot() {
             enemyShootZone.removeChild(enemyShootItem);
             enemiesShoots.splice(t, 1);
         }
+    }
+}
+
+function enemyShootGeneration() {
+    for(var w = 0; w < enemies.length; w++) {
+        enemyItem = document.getElementById(enemies[w]);
+        li = document.createElement("li");
+        li.setAttribute("class", "enemy_shoot");
+        li.setAttribute("id", "enemiesShoot_" + x);
+        li.style.top = enemyItem.offsetTop + 66;
+        li.style.left = enemyItem.offsetLeft + 32;
+        enemyShootZone.appendChild(li);
+        enemiesShoots.push("enemiesShoot_" + x);
+        x++;
     }
 }
 
@@ -221,8 +235,7 @@ function mainLoop() {
     spaceShipShoot();
     bgAnimation();
     asteroidMove();
-    enemyShoot();
-
+    enemyShootMove();
 }
 
 setInterval(function() {
@@ -236,17 +249,7 @@ setInterval(function() {
 
 
 setInterval(function() {
-    for(var w = 0; w < enemies.length; w++) {
-        enemyItem = document.getElementById(enemies[w]);
-        li = document.createElement("li");
-        li.setAttribute("class", "enemy_shoot");
-        li.setAttribute("id", "enemiesShoot_" + x);
-        li.style.top = enemyItem.offsetTop + 66;
-        li.style.left = enemyItem.offsetLeft + 32;
-        enemyShootZone.appendChild(li);
-        enemiesShoots.push("enemiesShoot_" + x);
-        x++;
-    }
+    enemyShootGeneration();
 }, 1000);
 
 keyDownHandle();
