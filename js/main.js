@@ -4,16 +4,21 @@ function Game() {
 
     var self = this,
         windowWith = window.innerWidth,
-        windowHeight = window.innerHeight;
+        windowHeight = window.innerHeight,
+        requestId = 0;
 
     this.startGame = function() {
         self.keyboard.keyDownHandle();
         self.keyboard.keyupHandle();
-        requestAnimationFrame(self.gameLoop);
+        requestId = requestAnimationFrame(self.gameLoop);
+    }
+    
+    this.stopGame = function() {
+        window.cancelAnimationFrame(requestId);
     }
 
     this.gameLoop = function() {
-        requestAnimationFrame(self.gameLoop);
+        requestId = requestAnimationFrame(self.gameLoop);
         self.spaceShip.move();
         self.spaceShip.shoot();
         self.board.bgAnimation();
@@ -182,10 +187,13 @@ function Game() {
         asteroidPosition: null,
         asteroidHtmlElement: null,
         asteroidIndex: 1,
+        asteroidInterval: null,
+        enemyInterval: null,
+        enemyShootInterval:null,
         initFactories: function() {
-            setInterval(function(){self.factories.asteroidGeneration()}, 2000);
-            setInterval(function(){self.factories.enemyGeneration()}, 3000);
-            setInterval(function(){self.factories.enemyShootGeneration()}, 1000);
+            this.asteroidInterval = setInterval(function(){self.factories.asteroidGeneration()}, 2000);
+            this.enemyInterval = setInterval(function(){self.factories.enemyGeneration()}, 3000);
+            this.enemyShootInterval = setInterval(function(){self.factories.enemyShootGeneration()}, 1000);
         },
         enemyGeneration: function() {
             this.enemyHtmlElement = document.createElement("li");
@@ -300,8 +308,25 @@ function Game() {
             }
         }
     };
+    
+    this.changingNavigatorTabHandle = function(){
+        window.addEventListener('focus', function() {
+           self.startGame();
+           self.factories.initFactories();
+            console.log('focus');
+        },false);
+
+        window.addEventListener('blur', function() {
+           self.stopGame();
+           window.clearInterval(self.factories.asteroidInterval);
+           window.clearInterval(self.factories.enemyInterval);
+           window.clearInterval(self.factories.enemyShootInterval);
+            console.log('unfocus');
+        },false);
+    };
 }
 
 var game = new Game();
 game.startGame();
 game.factories.initFactories();
+game.changingNavigatorTabHandle();
